@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WpfDrawingPlayground.Properties
+namespace WpfCompositionTarget.Properties
 {
 
 

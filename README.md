@@ -1,1 +1,1 @@
-WpfDrawingPlayground
+WpfCompositionTarget

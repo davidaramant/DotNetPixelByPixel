@@ -1,7 +1,7 @@
-﻿<Application x:Class="WpfDrawingPlayground.App"
+﻿<Application x:Class="WpfCompositionTarget.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:WpfDrawingPlayground"
+             xmlns:local="clr-namespace:WpfCompositionTarget"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
          

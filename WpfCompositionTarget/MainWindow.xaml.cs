@@ -6,7 +6,7 @@ using System.Windows.Media.Imaging;
 using Point = System.Drawing.Point;
 using Size = System.Drawing.Size;
 
-namespace WpfDrawingPlayground
+namespace WpfCompositionTarget
 {
     sealed class KeysPressed
     {
