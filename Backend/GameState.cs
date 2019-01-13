@@ -3,15 +3,15 @@ using System.Drawing;
 
 namespace Backend
 {
-    public delegate void DrawPixelOnCanvas(Point p, Color c);
+    public delegate void DrawPixel(Point p, Color c);
 
     public sealed class GameState
     {
-        private readonly DrawPixelOnCanvas _drawPixel;
+        private readonly DrawPixel _drawPixel;
         private readonly Size _canvasSize;
         private Point _position = new Point();
 
-        public GameState(DrawPixelOnCanvas drawPixel, Size canvasSize)
+        public GameState(DrawPixel drawPixel, Size canvasSize)
         {
             _drawPixel = drawPixel;
             _canvasSize = canvasSize;

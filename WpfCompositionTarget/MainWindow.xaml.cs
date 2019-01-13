@@ -29,7 +29,7 @@ namespace WpfCompositionTarget
             var width = (int)Width;
             var height = (int)Height;
             _canvas = BitmapFactory.New(pixelWidth: width, pixelHeight: height);
-            _gameState = new GameState(DrawPixelOnBitmap, new Size(width,height));
+            _gameState = new GameState(DrawPixel, new Size(width,height));
 
             PlaygroundImage.Source = _canvas;
 
@@ -44,42 +44,22 @@ namespace WpfCompositionTarget
             KeyUp += OnKeyUp;
         }
 
-        private void OnKeyUp(object sender, KeyEventArgs e)
-        {
-            switch (e.Key)
-            {
-                case Key.Up:
-                    _input.Up = false;
-                    break;
-                case Key.Down:
-                    _input.Down = false;
-                    break;
-                case Key.Left:
-                    _input.Left = false;
-                    break;
-                case Key.Right:
-                    _input.Right = false;
-                    break;
-            }
-        }
-
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
-            switch (e.Key)
-            {
-                case Key.Up:
-                    _input.Up = true;
-                    break;
-                case Key.Down:
-                    _input.Down = true;
-                    break;
-                case Key.Left:
-                    _input.Left = true;
-                    break;
-                case Key.Right:
-                    _input.Right = true;
-                    break;
-            }
+            // This method avoids any branching
+            _input.Up |= e.Key == Key.Up;
+            _input.Down |= e.Key == Key.Down;
+            _input.Left |= e.Key == Key.Left;
+            _input.Right |= e.Key == Key.Right;
+        }
+        
+        private void OnKeyUp(object sender, KeyEventArgs e)
+        {
+            // This method avoids any branching
+            _input.Up &= e.Key != Key.Up;
+            _input.Down &= e.Key != Key.Down;
+            _input.Left &= e.Key != Key.Left;
+            _input.Right &= e.Key != Key.Right;
         }
 
         void GameLoop(object sender, EventArgs e)
@@ -88,7 +68,7 @@ namespace WpfCompositionTarget
             _gameState.Render();
         }
 
-        public void DrawPixelOnBitmap(Point p, Color c)
+        public void DrawPixel(Point p, Color c)
         {
             try
             {
