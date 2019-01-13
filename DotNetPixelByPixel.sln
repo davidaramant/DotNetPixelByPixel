@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfCompositionTarget", "WpfCompositionTarget\WpfCompositionTarget.csproj", "{0C518923-34AA-4620-9A07-E4C95E2C0C88}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend", "Backend\Backend.csproj", "{BB56442A-93C3-4073-97A8-3B0128034B32}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{0C518923-34AA-4620-9A07-E4C95E2C0C88}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C518923-34AA-4620-9A07-E4C95E2C0C88}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C518923-34AA-4620-9A07-E4C95E2C0C88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB56442A-93C3-4073-97A8-3B0128034B32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB56442A-93C3-4073-97A8-3B0128034B32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB56442A-93C3-4073-97A8-3B0128034B32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB56442A-93C3-4073-97A8-3B0128034B32}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

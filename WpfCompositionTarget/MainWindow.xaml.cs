@@ -5,28 +5,19 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Point = System.Drawing.Point;
 using Size = System.Drawing.Size;
+using Color = System.Drawing.Color;
+using Backend;
 
 namespace WpfCompositionTarget
 {
-    sealed class KeysPressed
-    {
-        public bool Up;
-        public bool Down;
-        public bool Left;
-        public bool Right;
-    }
-
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
         private readonly WriteableBitmap _canvas;
-        private Point _position = new Point();
+        private readonly GameState _gameState;
         private readonly KeysPressed _input = new KeysPressed();
-
-        private readonly int _width;
-        private readonly int _height;
 
         public MainWindow()
         {
@@ -35,9 +26,10 @@ namespace WpfCompositionTarget
             RenderOptions.SetBitmapScalingMode(PlaygroundImage, BitmapScalingMode.NearestNeighbor);
             RenderOptions.SetEdgeMode(PlaygroundImage, EdgeMode.Aliased);
 
-            _width = (int)Width;
-            _height = (int)Height;
-            _canvas = BitmapFactory.New(pixelWidth: _width, pixelHeight: _height);
+            var width = (int)Width;
+            var height = (int)Height;
+            _canvas = BitmapFactory.New(pixelWidth: width, pixelHeight: height);
+            _gameState = new GameState(DrawPixelOnBitmap, new Size(width,height));
 
             PlaygroundImage.Source = _canvas;
 
@@ -92,30 +84,17 @@ namespace WpfCompositionTarget
 
         void GameLoop(object sender, EventArgs e)
         {
-            Size delta = new Size();
-            if (_input.Up)
-                delta.Height -= 5;
-            else if (_input.Down)
-                delta.Height += 5;
-            if (_input.Left)
-                delta.Width -= 5;
-            else if (_input.Right)
-                delta.Width += 5;
-
-            _position += delta;
-            _position.X = (_position.X + _width) % (int)_canvas.Width;
-            _position.Y = (_position.Y + _height) % (int)_canvas.Height;
-
-            DrawPixel(_position);
+            _gameState.Update(_input);
+            _gameState.Render();
         }
 
-        void DrawPixel(Point p)
+        public void DrawPixelOnBitmap(Point p, Color c)
         {
             try
             {
                 _canvas.Lock();
 
-                _canvas.SetPixel(x: p.X, y: p.Y, color: Colors.Black);
+                _canvas.SetPixel(x: p.X, y: p.Y, r: c.R, g: c.G, b:c.B);
                 _canvas.AddDirtyRect(new Int32Rect(x: p.X, y: p.Y, width: 1, height: 1));
             }
             finally
