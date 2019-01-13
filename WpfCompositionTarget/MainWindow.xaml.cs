@@ -61,6 +61,7 @@ namespace WpfCompositionTarget
 
         void GameLoop(object sender, EventArgs e)
         {
+            // TODO: Adding timing stuff to gamestate
             _gameState.Update(_input);
             _gameState.Render();
         }
