@@ -17,17 +17,19 @@ namespace Backend
             _canvasSize = canvasSize;
         }
 
-        public void Update(KeysPressed input)
+        public void Update(KeysPressed input, TimeSpan elapsed)
         {
+            const int movement = 1;
+
             Size delta = new Size();
             if (input.Up)
-                delta.Height -= 5;
+                delta.Height -= movement;
             else if (input.Down)
-                delta.Height += 5;
+                delta.Height += movement;
             if (input.Left)
-                delta.Width -= 5;
+                delta.Width -= movement;
             else if (input.Right)
-                delta.Width += 5;
+                delta.Width += movement;
 
             _position += delta;
             _position.X = (_position.X + _canvasSize.Width) % _canvasSize.Width;

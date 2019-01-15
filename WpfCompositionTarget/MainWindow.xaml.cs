@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -15,6 +16,8 @@ namespace WpfCompositionTarget
         private readonly WriteableBitmap _canvas;
         private readonly GameState _gameState;
         private readonly KeysPressed _input = new KeysPressed();
+        private readonly Stopwatch _timer = new Stopwatch();
+        private TimeSpan _lastElapsed;
 
         public MainWindow()
         {
@@ -39,6 +42,9 @@ namespace WpfCompositionTarget
             CompositionTarget.Rendering += GameLoop;
             KeyDown += OnKeyDown;
             KeyUp += OnKeyUp;
+
+            _timer.Start();
+            _lastElapsed = _timer.Elapsed;
         }
 
         private void OnKeyDown(object sender, KeyEventArgs e)
@@ -61,24 +67,27 @@ namespace WpfCompositionTarget
 
         void GameLoop(object sender, EventArgs e)
         {
-            // TODO: Adding timing stuff to gamestate
-            _gameState.Update(_input);
-            _gameState.Render();
-        }
+            var timeStamp = _timer.Elapsed;
+            _gameState.Update(_input, timeStamp - _lastElapsed);
+            _lastElapsed = timeStamp;
 
-        public void DrawPixel(Point p, Color c)
-        {
             try
             {
                 _canvas.Lock();
 
-                _canvas.SetPixel(x: p.X, y: p.Y, r: c.R, g: c.G, b:c.B);
-                _canvas.AddDirtyRect(new Int32Rect(x: p.X, y: p.Y, width: 1, height: 1));
+                _gameState.Render();
             }
             finally
             {
                 _canvas.Unlock();
             }
+        }
+
+        public void DrawPixel(Point p, Color c)
+        {
+            _canvas.SetPixel(x: p.X, y: p.Y, r: c.R, g: c.G, b: c.B);
+            // TODO: Is this necessary?
+            _canvas.AddDirtyRect(new Int32Rect(x: p.X, y: p.Y, width: 1, height: 1));
         }
     }
 }
