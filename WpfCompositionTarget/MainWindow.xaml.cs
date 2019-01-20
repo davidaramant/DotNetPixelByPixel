@@ -4,9 +4,6 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using Point = System.Drawing.Point;
-using Size = System.Drawing.Size;
-using Color = System.Drawing.Color;
 using Backend;
 
 namespace WpfCompositionTarget
@@ -29,7 +26,7 @@ namespace WpfCompositionTarget
             var width = (int)PlaygroundImage.Width;
             var height = (int)PlaygroundImage.Height;
             _canvas = BitmapFactory.New(pixelWidth: width, pixelHeight: height);
-            _gameState = new GameState(DrawPixel, new Size(width,height));
+            _gameState = new GameState(DrawPixel, width, height);
 
             PlaygroundImage.Source = _canvas;
 
@@ -55,7 +52,7 @@ namespace WpfCompositionTarget
             _input.Left |= e.Key == Key.Left;
             _input.Right |= e.Key == Key.Right;
         }
-        
+
         private void OnKeyUp(object sender, KeyEventArgs e)
         {
             // This method avoids any branching
@@ -84,9 +81,9 @@ namespace WpfCompositionTarget
             }
         }
 
-        public void DrawPixel(Point p, Color c)
+        private void DrawPixel(int x, int y, byte r, byte g, byte b)
         {
-            _canvas.SetPixel(x: p.X, y: p.Y, r: c.R, g: c.G, b: c.B);
+            _canvas.SetPixel(x: x, y: y, r: r, g: g, b: b);
             // TODO: Is this necessary?
             //_canvas.AddDirtyRect(new Int32Rect(x: p.X, y: p.Y, width: 1, height: 1));
         }

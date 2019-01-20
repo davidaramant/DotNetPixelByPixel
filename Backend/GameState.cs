@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace Backend
 {
-    public delegate void DrawPixel(Point p, Color c);
+    public delegate void DrawPixel(int x, int y, byte r, byte g, byte b);
 
     public sealed class GameState
     {
@@ -11,16 +11,17 @@ namespace Backend
         const int SquareRadius = 4;
 
         private readonly DrawPixel _drawPixel;
-        private readonly Size _canvasSize;
+        private readonly int _canvasWidth;
+        private readonly int _canvasHeight;
         private Point _centerPosition;
 
-
-        public GameState(DrawPixel drawPixel, Size canvasSize)
+        public GameState(DrawPixel drawPixel, int canvasWidth, int canvasHeight)
         {
             _drawPixel = drawPixel;
-            _canvasSize = canvasSize;
+            _canvasWidth = canvasWidth;
+            _canvasHeight = canvasHeight;
 
-            _centerPosition = new Point(canvasSize.Width / 2, canvasSize.Height / 2);
+            _centerPosition = new Point(canvasWidth / 2, canvasHeight / 2);
         }
 
         public void Update(KeysPressed input, TimeSpan elapsed)
@@ -40,8 +41,8 @@ namespace Backend
                 delta.Width += movement;
 
             _centerPosition += delta;
-            _centerPosition.X = Math.Max(SquareRadius, Math.Min(_canvasSize.Width - SquareRadius, _centerPosition.X));
-            _centerPosition.Y = Math.Max(SquareRadius, Math.Min(_canvasSize.Height - SquareRadius, _centerPosition.Y));
+            _centerPosition.X = Math.Max(SquareRadius, Math.Min(_canvasWidth - SquareRadius, _centerPosition.X));
+            _centerPosition.Y = Math.Max(SquareRadius, Math.Min(_canvasHeight - SquareRadius, _centerPosition.Y));
         }
 
         public void Render()
@@ -50,8 +51,7 @@ namespace Backend
             {
                 for (int xOffset = -SquareRadius; xOffset < SquareRadius; xOffset++)
                 {
-                    var delta = new Size(xOffset, yOffset);
-                    _drawPixel(_centerPosition + delta, Color.Black);
+                    _drawPixel(_centerPosition.X + xOffset, _centerPosition.Y + yOffset, 0, 0, 0);
                 }
             }
         }
