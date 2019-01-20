@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfCompositionTarget"
         mc:Ignorable="d"
-        Title="MainWindow" Height="480" Width="640" ResizeMode="NoResize">
+        Title="MainWindow" ResizeMode="NoResize" SizeToContent="WidthAndHeight">
     <Grid>
-        <Image Name="PlaygroundImage"/>
+        <Image Width="640" Height="480" Name="PlaygroundImage"/>
     </Grid>
 </Window>

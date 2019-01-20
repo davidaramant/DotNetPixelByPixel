@@ -26,8 +26,8 @@ namespace WpfCompositionTarget
             RenderOptions.SetBitmapScalingMode(PlaygroundImage, BitmapScalingMode.NearestNeighbor);
             RenderOptions.SetEdgeMode(PlaygroundImage, EdgeMode.Aliased);
 
-            var width = (int)Width;
-            var height = (int)Height;
+            var width = (int)PlaygroundImage.Width;
+            var height = (int)PlaygroundImage.Height;
             _canvas = BitmapFactory.New(pixelWidth: width, pixelHeight: height);
             _gameState = new GameState(DrawPixel, new Size(width,height));
 
@@ -74,6 +74,7 @@ namespace WpfCompositionTarget
             try
             {
                 _canvas.Lock();
+                _canvas.Clear(Colors.White);
 
                 _gameState.Render();
             }
@@ -87,7 +88,7 @@ namespace WpfCompositionTarget
         {
             _canvas.SetPixel(x: p.X, y: p.Y, r: c.R, g: c.G, b: c.B);
             // TODO: Is this necessary?
-            _canvas.AddDirtyRect(new Int32Rect(x: p.X, y: p.Y, width: 1, height: 1));
+            //_canvas.AddDirtyRect(new Int32Rect(x: p.X, y: p.Y, width: 1, height: 1));
         }
     }
 }
